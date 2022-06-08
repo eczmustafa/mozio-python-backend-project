@@ -6,6 +6,9 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .models import Provider, ServiceArea
 from .serializers import (
     ProviderSerializer,
@@ -22,8 +25,8 @@ class ProviderViewSet(ModelViewSet):
 
     **Authentication is not implemented.** However, each provider has a UUID.
 
-    GET request of */api/providers/[uuid]]/* and */api/providers/[uuid]]/serviceareas*
-    retrieves the provider details and service areas respectively.
+    GET request of */api/providers/[uuid]/* and */api/providers/[uuid]/serviceareas*
+    retrieve the provider details and service areas respectively.
     So, other providers cannot see or modify the others' data.
     """
 
@@ -77,10 +80,38 @@ class QueryServiceAreas(generics.ListAPIView):
             latitude = float(latitude)
             longitude = float(longitude)
         except Exception as ex:
-            raise BadRequest("Invalid parameters")
+            raise BadRequest("Invalid parameters. Sample usage: /api/search/?latitude=25&longitude=15")
 
         query_point = Point(latitude, longitude)
 
         return ServiceArea.objects.filter(geojson__contains=query_point).select_related(
             "provider"
         )
+
+class DocsView(APIView):
+    """
+    CRUD operations for providers and service areas.
+    
+    **List of providers:**
+    *providers/*
+
+    **Details of providers:**
+    *providers/[uuid]*
+
+    **Service area of a provider:**
+    *providers/[uuid]/serviceareas*
+
+    **Details of a service area:**
+    *providers/[uuid]/serviceareas/[id]*
+
+    
+    
+
+    """
+
+    def get(self, request, *args, **kwargs):
+        apidocs = {
+            "List of Providers": request.build_absolute_uri("providers/"),
+            "Example Service Area Search": request.build_absolute_uri("search/?latitude=25&longitude=15"),
+        }
+        return Response(apidocs)

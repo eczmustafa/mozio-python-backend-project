@@ -1,8 +1,11 @@
 from django.urls import path
 from django.urls.conf import include
 from rest_framework_nested import routers
-
 from . import views
+
+
+
+
 
 router = routers.DefaultRouter()
 router.register("providers", views.ProviderViewSet, basename="providers")
@@ -15,6 +18,9 @@ service_areas_router.register(
 )
 
 # URLConf
-urlpatterns = [path("search/", views.QueryServiceAreas.as_view())]
+urlpatterns = [
+    path("", views.DocsView.as_view()),
+    path("search/", views.QueryServiceAreas.as_view()),
+    ]
 
 urlpatterns += router.urls + service_areas_router.urls

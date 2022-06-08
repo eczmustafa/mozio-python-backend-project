@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from django.db import transaction
 from rest_framework import serializers
+from rest_framework.views import exception_handler
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 from .models import Provider, ServiceArea
@@ -27,6 +28,7 @@ class ServiceAreaSearchSerializer(GeoFeatureModelSerializer):
 
 
 class ServiceAreaSerializer(GeoFeatureModelSerializer):
+    provider=serializers.StringRelatedField()
     class Meta:
         model = ServiceArea
         fields = ["id", "provider", "name", "price"]
