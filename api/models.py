@@ -1,12 +1,14 @@
+from uuid import uuid4
+
 from django.contrib.gis.db import models as gis_models
 from django.db import models
 from rest_framework import serializers
-from uuid import uuid4
+
 # Create your models here.
 
 
 class Provider(models.Model):
-    id=models.UUIDField(primary_key=True, default=uuid4)
+    id = models.UUIDField(primary_key=True, default=uuid4)
     name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, unique=True)
     phone_number = models.CharField(max_length=20)

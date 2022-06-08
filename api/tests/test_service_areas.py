@@ -1,7 +1,7 @@
+import pytest
+from api.models import Provider, ServiceArea
 from rest_framework import status
 from rest_framework.test import APIClient
-from api.models import Provider, ServiceArea
-import pytest
 
 
 @pytest.mark.django_db
@@ -27,12 +27,12 @@ class TestCreateServiceArea:
                 provider=self.provider.id,
                 name="service area",
                 price=100,
-                geojson="POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))"
+                geojson="POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))",
             ),
         )
         print(response.data)
         assert response.status_code == status.HTTP_201_CREATED
-    
+
     def test_create_service_area_with_invalid_polygon(self):
         client = APIClient()
         response = client.post(
@@ -41,7 +41,7 @@ class TestCreateServiceArea:
                 provider=self.provider.id,
                 name="service area",
                 price=100,
-                geojson="POLYGON ((0 0, 40 40, 0 40, 40 0, 0 15))"
+                geojson="POLYGON ((0 0, 40 40, 0 40, 40 0, 0 15))",
             ),
         )
         print(response.data)

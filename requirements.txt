@@ -20,8 +20,3 @@ cython
 postgis
 psycopg2
 djangorestframework-gis==1.0
-#mysqlclient
-#djangorestframework-simplejwt==4.8.0
-#djoser==2.1.0
-
-#django-filter

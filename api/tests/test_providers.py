@@ -1,7 +1,7 @@
+import pytest
+from api.models import Provider, ServiceArea
 from rest_framework import status
 from rest_framework.test import APIClient
-from api.models import Provider, ServiceArea
-import pytest
 
 
 @pytest.mark.django_db
@@ -14,8 +14,8 @@ class TestCreateProvider:
         provider.language = "EN"
         provider.currency = "EUR"
         provider.save()
-        
-        self.provider=provider
+
+        self.provider = provider
 
     def teardown_method(self, test_method):
         ...
