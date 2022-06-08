@@ -7,7 +7,7 @@ WORKDIR /app
 RUN apt-get update &&\
     apt-get install -y binutils libproj-dev gdal-bin
 
-RUN apt install -y postgis postgresql-13-postgis-3
+RUN apt install -y postgis postgresql-14-postgis-3
 
 COPY requirements.txt /app/
 

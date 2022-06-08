@@ -13,5 +13,5 @@ protobuf<=3.20.1
 postgres
 cython
 postgis
-psycopg2
+psycopg2-binary
 djangorestframework-gis==1.0
