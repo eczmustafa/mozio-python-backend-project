@@ -14,6 +14,7 @@ class ProviderBasicSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
+            "currency",
         ]
 
 
