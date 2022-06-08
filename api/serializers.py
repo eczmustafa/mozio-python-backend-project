@@ -33,6 +33,15 @@ class ServiceAreaSerializer(GeoFeatureModelSerializer):
         model = ServiceArea
         fields = ["id", "provider", "name", "price"]
         geo_field = "geojson"
+    
+    def save(self, **kwargs):
+        provider_id = self.context["provider_id"]
+
+        self.instance = ServiceArea.objects.create(
+            provider_id=provider_id, **self.validated_data
+        )
+
+        return self.instance
 
 
 class ProviderSerializer(serializers.ModelSerializer):

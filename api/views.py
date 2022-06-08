@@ -48,15 +48,16 @@ class ProviderViewSet(ModelViewSet):
 class ServiceAreaViewSet(ModelViewSet):
     """
     Returns a list of all service areas of the provider with the UUID.
-
-    Allows CRUD operations.
+    
+    CRUD operations can be carried out through this end point:
+    */api/providers/[uuid]/serviceareas/[id]/*
     """
 
     # queryset = ServiceArea.objects.select_related("provider").all()
     serializer_class = ServiceAreaSerializer
 
     def get_serializer_context(self):
-        return {"request": self.request}
+        return {"request": self.request, "provider_id": self.kwargs["provider_pk"]}
 
     def get_queryset(self):
         return ServiceArea.objects.filter(
@@ -80,7 +81,9 @@ class QueryServiceAreas(generics.ListAPIView):
             latitude = float(latitude)
             longitude = float(longitude)
         except Exception as ex:
-            raise BadRequest("Invalid parameters. Sample usage: /api/search/?latitude=25&longitude=15")
+            raise BadRequest(
+                "Invalid parameters. Sample usage: /api/search/?latitude=25&longitude=15"
+            )
 
         query_point = Point(latitude, longitude)
 
@@ -88,10 +91,11 @@ class QueryServiceAreas(generics.ListAPIView):
             "provider"
         )
 
+
 class DocsView(APIView):
     """
     CRUD operations for providers and service areas.
-    
+
     **List of providers:**
     *providers/*
 
@@ -104,14 +108,16 @@ class DocsView(APIView):
     **Details of a service area:**
     *providers/[uuid]/serviceareas/[id]*
 
-    
-    
+
+
 
     """
 
     def get(self, request, *args, **kwargs):
         apidocs = {
             "List of Providers": request.build_absolute_uri("providers/"),
-            "Example Service Area Search": request.build_absolute_uri("search/?latitude=25&longitude=15"),
+            "Example Service Area Search": request.build_absolute_uri(
+                "search/?latitude=25&longitude=15"
+            ),
         }
         return Response(apidocs)
