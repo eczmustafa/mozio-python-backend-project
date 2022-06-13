@@ -51,6 +51,8 @@ class ServiceAreaViewSet(ModelViewSet):
     
     CRUD operations can be carried out through this end point:
     */api/providers/[uuid]/serviceareas/[id]/*
+
+    Sample polygon input for Geojson field: POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))
     """
 
     # queryset = ServiceArea.objects.select_related("provider").all()
